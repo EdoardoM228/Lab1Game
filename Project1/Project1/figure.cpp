@@ -37,3 +37,4 @@ void placeFigure(int colorNum) {
     for (int i = 0; i < 4; i++) {
         field[a[i].y][a[i].x] = colorNum;  // Поместить фигуру на поле с указанным цветом
     }
+}
