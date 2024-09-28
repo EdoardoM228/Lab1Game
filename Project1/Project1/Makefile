@@ -5,7 +5,7 @@ SFML_LIB = src/lib
 all: TetrisGame
 
 TetrisGame: figure.o game.o clear.o field.o point.o main.o
-	g++ -o Project1.exe figure.o game.o clear.o field.o point.o main.o -L"$(SFML_LIB)" -lsfml-graphics -lsfml-window -lsfml-system
+	g++ -o Tetris.exe figure.o game.o clear.o field.o point.o main.o -L"$(SFML_LIB)" -lsfml-graphics -lsfml-window -lsfml-system
 
 figure.o:
 	g++ figure.cpp -o figure.o -c -I"$(SFML_INCLUDE)"
