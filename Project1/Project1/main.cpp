@@ -1,52 +1,20 @@
 #include <SFML/Graphics.hpp>
-#include "figure.h"
 #include "game.h"
-#include "clear.h"
-#include "field.h"
 
-using namespace sf;
+using namespace sf; // Используем пространство имен SFML
+using namespace std; // Если нужно, используем пространство имен std
 
 int main() {
     RenderWindow window(VideoMode(320, 480), "Tetris");
+    Game game; // Создание объекта Game
 
-    Texture t;
-    t.loadFromFile("images/tiles.png");
-    Sprite s(t);
-
-    int dx = 0;  
-    bool rotate = false;
-    float timer = 0, delay = 0.3;
-    Clock clock;
-    int colorNum = 1;
-
-    generateNewFigure(); 
-
+    // Основной игровой цикл
     while (window.isOpen()) {
-        float time = clock.getElapsedTime().asSeconds();
-        clock.restart();
-        timer += time;
-
-        handleInput(window, dx, rotate); 
-        updateGameState(window, dx, rotate, timer, delay, colorNum);  
-
-        clearFullLines();  
-
-        window.clear(Color::White);
-        for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++) {
-                if (field[i][j] == 0) continue;
-                s.setTextureRect(IntRect(field[i][j] * 18, 0, 18, 18));
-                s.setPosition(j * 18, i * 18);
-                window.draw(s);
-            }
-
-        for (int i = 0; i < 4; i++) {
-            s.setTextureRect(IntRect(colorNum * 18, 0, 18, 18));
-            s.setPosition(a[i].x * 18, a[i].y * 18);
-            window.draw(s);
-        }
-
-        window.display();
+        game.handleInput(window); // Обработка ввода
+        game.updateGameState(window); // Обновление состояния игры
+        window.clear(Color::White); // Очистка окна
+        game.draw(); // Отрисовка состояния игры
+        window.display(); // Обновление окна
     }
 
     return 0;

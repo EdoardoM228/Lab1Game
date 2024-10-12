@@ -2,11 +2,11 @@
 #include "figure.h"
 #include "clear.h"
 #include "field.h"
-#include <SFML/Graphics.hpp>
+#include <iostream>
 
-using namespace sf;
+Game::Game() : dx(0), rotate(false), timer(0), delay(0.3), colorNum(1) {}
 
-void handleInput(RenderWindow& window, int& dx, bool& rotate) {
+void Game::handleInput(RenderWindow& window) {
     dx = 0;  
     Event e;
     while (window.pollEvent(e)) {
@@ -23,8 +23,7 @@ void handleInput(RenderWindow& window, int& dx, bool& rotate) {
     }
 }
 
-void updateGameState(RenderWindow& window, int& dx, bool& rotate, float& timer, float delay, int& colorNum) {
-
+void Game::updateGameState(RenderWindow& window) {
     for (int i = 0; i < 4; i++) {
         b[i] = a[i];
         a[i].x += dx;
@@ -46,7 +45,7 @@ void updateGameState(RenderWindow& window, int& dx, bool& rotate, float& timer, 
 
         if (!check()) {
             for (int i = 0; i < 4; i++)
-                field[b[i].y][b[i].x] = colorNum;  
+                Field::grid[b[i].y][b[i].x] = colorNum;  
             generateNewFigure(); 
             colorNum = 1 + rand() % 7;  
         }
@@ -55,4 +54,23 @@ void updateGameState(RenderWindow& window, int& dx, bool& rotate, float& timer, 
     }
 
     dx = 0;
+}
+
+// Реализация метода draw
+void Game::draw() const {
+    // Реализация отрисовки объекта
+    std::cout << "Drawing Game object" << std::endl;
+}
+
+// Реализация метода update
+void Game::update() {
+    // Реализация обновления состояния объекта
+}
+
+// Оператор вывода
+std::ostream& operator<<(std::ostream& os, const Game& game) {
+    os << "Game State: dx=" << game.dx << ", rotate=" << game.rotate 
+       << ", timer=" << game.timer << ", delay=" << game.delay 
+       << ", colorNum=" << game.colorNum;
+    return os;
 }
