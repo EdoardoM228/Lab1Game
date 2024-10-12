@@ -6,8 +6,8 @@ const int N = 10;
 
 class Field {
  public:
-    int static grid[M][N];
-    int static figures[7][4]; // Объявление массива фигур
+    static int grid[M][N];
+    static int figures[7][4]; // Объявление массива фигур
     Field(); // Конструктор
     Field(const Field& other); // Оператор копирования
     Field& operator=(const Field& other); // Оператор присваивания

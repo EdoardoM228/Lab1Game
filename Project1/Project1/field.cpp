@@ -15,6 +15,8 @@ int Field::figures[7][4] = {
     2, 3, 4, 5   // Фигура 7
 };
 
+int Field::grid[M][N];
+
 Field& Field::operator=(const Field& other) {
     if (this != &other) {
         std::memcpy(grid, other.grid, sizeof(grid)); // Копирование массива
