@@ -39,6 +39,46 @@
 - `game.hpp` — содержит функции для обработки ввода и обновления состояния игры.
 - `clear.hpp` — содержит функцию для очистки заполненных линий.
 
+## Сборка
+
+### Шаги для сборки проекта:
+
+1. Убедитесь, что вы установили **MinGW** (64-битную версию, если используете 64-битную SFML) и добавили его в переменные окружения системы.
+2. Скачайте и установите SFML 2.6.1 с [официального сайта](https://www.sfml-dev.org/download.php). Разархивируйте SFML в подходящую директорию, например, `H:/SFML-2.6.1`.
+3. Убедитесь, что пути к SFML указаны правильно в файле `Makefile`.
+
+### Makefile:
+
+```makefile
+SFML_INCLUDE = src/include
+SFML_LIB = src/lib
+
+all: TetrisGame
+
+TetrisGame: figure.o game.o clear.o field.o point.o main.o
+	g++ -o Tetris.exe figure.o game.o clear.o field.o point.o main.o -L"$(SFML_LIB)" -lsfml-graphics -lsfml-window -lsfml-system
+
+figure.o:
+	g++ figure.cpp -o figure.o -c -I"$(SFML_INCLUDE)"
+
+game.o:
+	g++ game.cpp -o game.o -c -I"$(SFML_INCLUDE)"
+
+clear.o:
+	g++ clear.cpp -o clear.o -c -I"$(SFML_INCLUDE)"
+
+field.o:
+	g++ field.cpp -o field.o -c -I"$(SFML_INCLUDE)"
+
+point.o:
+	g++ point.cpp -o point.o -c -I"$(SFML_INCLUDE)"
+
+main.o:
+	g++ main.cpp -o main.o -c -I"$(SFML_INCLUDE)"
+
+clean:
+	rm -f *.o *.exe
+=======
 ## Используемые Операторы
 
 ### Класс `Point`
