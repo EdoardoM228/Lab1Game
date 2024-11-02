@@ -1,20 +1,20 @@
 #pragma once
 #include <ostream>
+#include <vector>
 
 const int M = 20;
 const int N = 10;
 
 class Field {
- public:
-    static int grid[M][N];
-    static int figures[7][4]; // Объявление массива фигур
-    Field(); // Конструктор
-    Field(const Field& other); // Оператор копирования
-    Field& operator=(const Field& other); // Оператор присваивания
+public:
+    static std::vector<std::vector<int>> grid;
+    static std::vector<std::vector<int>> figures;
+    
+    Field();
+    Field(const Field& other);
+    Field& operator=(const Field& other);
 
-    // Метод для получения ячейки
     int getCell(int x, int y) const;
 
-    // Оператор вывода
     friend std::ostream& operator<<(std::ostream& os, const Field& field);
 };

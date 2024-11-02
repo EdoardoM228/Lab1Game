@@ -1,7 +1,8 @@
 #pragma once
 #include "point.h"
+#include <array>
 
-extern Point a[4], b[4];
+extern std::array<Point, 4> a, b;
 
 bool check();
 void rotateFigure();

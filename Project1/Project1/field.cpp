@@ -1,25 +1,28 @@
 #include "field.h"
-#include <cstring> // Для memcpy
+#include <algorithm> // для std::fill
 
-Field::Field() {
-    std::memset(grid, 0, sizeof(grid)); // Инициализация поля нулями
-}
+// Инициализация статического двумерного вектора grid
+std::vector<std::vector<int>> Field::grid(M, std::vector<int>(N, 0)); // Все элементы инициализированы нулями
 
-int Field::figures[7][4] = {
-    1, 3, 5, 7,  // Фигура 1
-    2, 4, 5, 7,  // Фигура 2
-    3, 5, 4, 6,  // Фигура 3
-    3, 5, 4, 7,  // Фигура 4
-    2, 3, 5, 7,  // Фигура 5
-    3, 5, 7, 6,  // Фигура 6
-    2, 3, 4, 5   // Фигура 7
+// Инициализация статического вектора figures
+std::vector<std::vector<int>> Field::figures = {
+    {1, 3, 5, 7},  // Фигура 1
+    {2, 4, 5, 7},  // Фигура 2
+    {3, 5, 4, 6},  // Фигура 3
+    {3, 5, 4, 7},  // Фигура 4
+    {2, 3, 5, 7},  // Фигура 5
+    {3, 5, 7, 6},  // Фигура 6
+    {2, 3, 4, 5}   // Фигура 7
 };
 
-int Field::grid[M][N];
+Field::Field() {
+    // Конструктор не требует дополнительной инициализации для grid, так как она уже инициализирована выше
+}
 
 Field& Field::operator=(const Field& other) {
     if (this != &other) {
-        std::memcpy(grid, other.grid, sizeof(grid)); // Копирование массива
+        grid = other.grid; // Копирование вектора
+        figures = other.figures; // Копирование фигур
     }
     return *this;
 }
@@ -28,11 +31,10 @@ int Field::getCell(int x, int y) const {
     return grid[y][x];
 }
 
-// Оператор вывода
 std::ostream& operator<<(std::ostream& os, const Field& field) {
-    for (int i = 0; i < M; ++i) {
-        for (int j = 0; j < N; ++j) {
-            os << field.grid[i][j] << " ";
+    for (const auto& row : Field::grid) {
+        for (const auto& cell : row) {
+            os << cell << " ";
         }
         os << "\n";
     }
