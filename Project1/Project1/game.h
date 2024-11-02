@@ -8,21 +8,18 @@ using namespace sf;
 
 class Game : public GameObject {
 public:
-    int dx; // Движение по оси X
-    bool rotate; // Флаг поворота
-    float timer; // Таймер
-    float delay; // Задержка
-    int colorNum; // Цвет фигуры
+    int dx;         // Движение по оси X
+    bool rotate;    // Флаг поворота
+    float timer;    // Таймер
+    float delay;    // Задержка
+    int colorNum;   // Цвет фигуры
 
-    // Конструктор
     Game();
 
-    // Реализация методов базового класса
     void handleInput(RenderWindow& window);
     void updateGameState(RenderWindow& window);
-    void draw() const override; // Реализация метода draw
-    void update() override; // Реализация обновления состояния
+    void draw() const override;
+    void update() override;
 
-    // Оператор вывода
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 };

@@ -1,41 +1,42 @@
 #include "figure.h"
 #include "field.h"
-#include <stdlib.h>
+#include <array>
+#include <cstdlib>
 
-Point a[4], b[4];
+std::array<Point, 4> a, b;
 
 bool check() {
-    for (int i = 0; i < 4; i++) {
-        if (a[i].x < 0 || a[i].x >= N || a[i].y >= M) return false; 
-        if (Field::grid[a[i].y][a[i].x]) return false; 
+    for (const auto& p : a) {
+        if (p.x < 0 || p.x >= N || p.y >= M || Field::grid[p.y][p.x] != 0) {
+            return false;
+        }
     }
     return true;
 }
 
 void rotateFigure() {
-    Point p = a[1];  // Ось вращения - центральная точка фигуры
-    for (int i = 0; i < 4; i++) {
-        int x = a[i].y - p.y;
-        int y = a[i].x - p.x;
-        a[i].x = p.x - x;
-        a[i].y = p.y + y;
+    Point p = a[1];
+    for (auto& point : a) {
+        int x = point.y - p.y;
+        int y = point.x - p.x;
+        point.x = p.x - x;
+        point.y = p.y + y;
     }
-    if (!check()) { 
-        for (int i = 0; i < 4; i++) a[i] = b[i]; // Возврат, если поворот невалидный
+    if (!check()) {
+        a = b;
     }
 }
 
 void generateNewFigure() {
-    int n = rand() % 7; // Случайный выбор фигуры
+    int n = rand() % 7;
     for (int i = 0; i < 4; i++) {
-        a[i].x = Field::figures[n][i] % 2; // Координаты X
-        a[i].y = Field::figures[n][i] / 2; // Координаты Y
+        a[i].x = Field::figures[n][i] % 2;
+        a[i].y = Field::figures[n][i] / 2;
     }
 }
 
-
 void placeFigure(int colorNum) {
-    for (int i = 0; i < 4; i++) {
-        Field::grid[a[i].y][a[i].x] = colorNum;  
+    for (const auto& point : a) {
+        Field::grid[point.y][point.x] = colorNum;
     }
 }

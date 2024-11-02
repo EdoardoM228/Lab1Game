@@ -3,22 +3,30 @@
 #include "clear.h"
 #include "field.h"
 #include <iostream>
+#include <memory> // Для использования умных указателей
 
 Game::Game() : dx(0), rotate(false), timer(0), delay(0.3), colorNum(1) {}
 
 void Game::handleInput(RenderWindow& window) {
-    dx = 0;  
+    dx = 0;
     Event e;
     while (window.pollEvent(e)) {
         if (e.type == Event::Closed)
             window.close();
         if (e.type == Event::KeyPressed) {
-            if (e.key.code == Keyboard::Up)
-                rotate = true;  
-            else if (e.key.code == Keyboard::Left)
-                dx = -1;  
-            else if (e.key.code == Keyboard::Right)
-                dx = 1; 
+            switch (e.key.code) {
+                case Keyboard::Up:
+                    rotate = true;
+                    break;
+                case Keyboard::Left:
+                    dx = -1;
+                    break;
+                case Keyboard::Right:
+                    dx = 1;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -28,13 +36,13 @@ void Game::updateGameState(RenderWindow& window) {
         b[i] = a[i];
         a[i].x += dx;
     }
-    if (!check())  
+    if (!check())
         for (int i = 0; i < 4; i++)
-            a[i] = b[i]; 
+            a[i] = b[i];
 
     if (rotate) {
         rotateFigure();
-        rotate = false;  
+        rotate = false;
     }
 
     if (timer > delay) {
@@ -44,33 +52,30 @@ void Game::updateGameState(RenderWindow& window) {
         }
 
         if (!check()) {
-            for (int i = 0; i < 4; i++)
-                Field::grid[b[i].y][b[i].x] = colorNum;  
-            generateNewFigure(); 
-            colorNum = 1 + rand() % 7;  
+            for (const auto& point : b) {
+                Field::grid[point.y][point.x] = colorNum;
+            }
+            generateNewFigure();
+            colorNum = 1 + rand() % 7;
         }
 
-        timer = 0;  
+        timer = 0;
     }
 
     dx = 0;
 }
 
-// Реализация метода draw
 void Game::draw() const {
-    // Реализация отрисовки объекта
     std::cout << "Drawing Game object" << std::endl;
 }
 
-// Реализация метода update
 void Game::update() {
-    // Реализация обновления состояния объекта
+    // Логика обновления состояния объекта
 }
 
-// Оператор вывода
 std::ostream& operator<<(std::ostream& os, const Game& game) {
-    os << "Game State: dx=" << game.dx << ", rotate=" << game.rotate 
-       << ", timer=" << game.timer << ", delay=" << game.delay 
+    os << "Game State: dx=" << game.dx << ", rotate=" << game.rotate
+       << ", timer=" << game.timer << ", delay=" << game.delay
        << ", colorNum=" << game.colorNum;
     return os;
 }
