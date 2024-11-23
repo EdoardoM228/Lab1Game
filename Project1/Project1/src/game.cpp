@@ -73,6 +73,7 @@ void Game::update() {
     // Логика обновления состояния объекта
 }
 
+
 std::ostream& operator<<(std::ostream& os, const Game& game) {
     os << "Game State: dx=" << game.dx << ", rotate=" << game.rotate
        << ", timer=" << game.timer << ", delay=" << game.delay

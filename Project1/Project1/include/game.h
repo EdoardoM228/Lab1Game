@@ -1,7 +1,8 @@
-#pragma once
+                                                                    #pragma once
 #include <SFML/Graphics.hpp>
 #include "point.h"
 #include "gameObject.h"
+#include "figure.h"
 #include <ostream>
 
 using namespace sf;
@@ -19,7 +20,7 @@ public:
     void handleInput(RenderWindow& window);
     void updateGameState(RenderWindow& window);
     void draw() const override;
-    void update() override;
+    void update() override;    
 
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 };

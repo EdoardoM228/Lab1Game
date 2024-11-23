@@ -11,28 +11,21 @@ void Cleaner::clearFullLines(Field& field) {
             if (field.getCell(j, i) != 0) count++;
         }
         if (count == N) {
-            for (int j = 0; j < N; j++) {
-                field.grid[k][j] = field.grid[i][j]; // Переносим строку вниз
-            }
+            std::copy(field.grid[i].begin(), field.grid[i].end(), field.grid[k].begin());
             k--;
         }
     }
 
     // Очищаем оставшиеся линии вверху
     for (int i = 0; i <= k; i++) {
-        for (int j = 0; j < N; j++) {
-            field.grid[i][j] = 0; // Устанавливаем оставшиеся линии в ноль
-        }
+        std::fill(field.grid[i].begin(), field.grid[i].end(), 0);
     }
 }
 
-// Реализация метода draw
 void Cleaner::draw() const {
-    // Реализация отрисовки объекта
     std::cout << "Drawing Cleaner object" << std::endl;
 }
 
-// Реализация метода update
 void Cleaner::update() {
     // Реализация обновления состояния объекта
 }
